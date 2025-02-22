@@ -1,0 +1,422 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>겁쟁이페달소트</title>
+<script type="text/javascript">
+<!--
+//*********************************************************
+//
+// ?価するメンバ?の名前のリスト
+//
+// この部分を変更して下さい。名前の削除・追加も可?です。
+// 名前を引用符(")で括り、コン?(,)で区切って下さい。
+// 但し、リストの最後にはコン?を入れてはいけません。
+//
+//*********************************************************
+var namMember = new Array(
+
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb6vF1g%2FbtsMsgio2uu%2Fk4FyA4E03FXwMr3afV3g7k%2Fimg.jpg> <br>오노다 사카미치</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbxkVPW%2FbtsMr1eRtli%2F5vqlTPRxirIyAcsoYsh7R1%2Fimg.jpg> <br>이마이즈미 슌스케</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1Oln0%2FbtsMtnAWjt6%2FLkyKugYskqJ0CKGUp9escK%2Fimg.jpg> <br>나루코 쇼키치</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fql7Vf%2FbtsMrunTYTN%2F6RmXpeoSIkbAtTG4VtLCF0%2Fimg.jpg> <br>스기모토 테루후미</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJtvSp%2FbtsMrYvELZz%2F4OxARmus6oFJgg86ZlN6Zk%2Fimg.jpg> <br>킨조 신고</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOdXid%2FbtsMs7LM199%2FPfIC1l9MEbfXZbuLnUbZE0%2Fimg.jpg> <br>마키시마 유스케</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDkrtZ%2FbtsMrY3s51R%2FgrLJmPWhGjwdNH1TUAqARK%2Fimg.jpg> <br>타도코로 진</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FohYLl%2FbtsMug2h8Cf%2FTbl7AFwPHAo0SwkM6T7yO1%2Fimg.jpg> <br>테시마 준타</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FlcMOA%2FbtsMshuWRhJ%2FROJDuAlAZRsubrKPTWLIT1%2Fimg.jpg> <br>아오야기 하지메</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FD4EfM%2FbtsMtaV617o%2F9NZ87vz2IgNGPBfiCxGP21%2Fimg.jpg> <br>코가 키미타카</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbNBTJ%2FbtsMtRhqM2X%2FLBQx6dFYiupkEsAjMcZp20%2Fimg.jpg> <br>칸자키 토지</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FQVUnJ%2FbtsMtcGi1Du%2FkyN2VILH4azqmCPqOmHp8k%2Fimg.jpg> <br>칸자키 미키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEUwtM%2FbtsMuxpc6mh%2FVhmKBSWYgkkAixKi7BPcB0%2Fimg.jpg> <br>Mr. 피에르</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtPWB0%2FbtsMsjztuSb%2FRXHs7uwVSX5cyLuVY95O1k%2Fimg.jpg> <br>타치바나 아야</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9i1Kb%2FbtsMsQDygCX%2F4sFfcTIb2NrIexgmyolaL0%2Fimg.jpg> <br>카와다 타쿠야</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FK0di9%2FbtsMtIENzMV%2F2QKx0kKYUdJgZ2vEXTt5M0%2Fimg.jpg> <br>사쿠라이 츠요시</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flc1uw%2FbtsMuq4HWP0%2FcYIHCWkQA8Vqn9MItMzGi1%2Fimg.jpg> <br>카부라기 잇사</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbPiFfh%2FbtsMrDSsVEr%2FJUiW0DCZ9Nvnxe7fMogB81%2Fimg.jpg> <br>단치쿠 류호</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbxEB0c%2FbtsMt6FqlBV%2FESco3ykCkBQKXLDikOoK5k%2Fimg.jpg> <br>스기모토 사다토키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FLmZEf%2FbtsMrF3TJ3H%2F5S4b2CHlLYYyDszFFmwjQ1%2Fimg.jpg> <br>로쿠다이 렌타</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcHXfmE%2FbtsMr7yYvfq%2FkJUTXDjRZsLxyAHthcBWM0%2Fimg.jpg> <br>키나카 츠쿠나오</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F6nSJO%2FbtsMrX4tER0%2FwGWiwwnKwtJKlE8ywbIcIk%2Fimg.jpg> <br>고리조</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbb5o2l%2FbtsMrDLQM1n%2FCWVqDFsRs72HUMKhm3ufqk%2Fimg.jpg> <br>무라카미 토요카</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcbSKWl%2FbtsMtpyF3oZ%2FrKh2OCCxCga3pqYUgHFFuK%2Fimg.jpg> <br>히노키 케이스케</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuHYFG%2FbtsMtpSYo8B%2FFSSZZKvAME486pTVqfZpQK%2Fimg.jpg> <br>아미고에 쿄타로</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuKvy8%2FbtsMuvEUw2c%2FkHkCS4oBeXNbFkQiXL1ZQK%2Fimg.jpg> <br>후쿠토미 주이치</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FooBxa%2FbtsMsj66TWC%2Fp7hktqIrshWeKe27Bm0va0%2Fimg.jpg> <br>아라키타 야스토모</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBLhiD%2FbtsMtrJZ945%2F9akgVWziBJIy1SRtDNRyiK%2Fimg.jpg> <br>토도 진파치</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbdOJZP%2FbtsMtb1L7VA%2F12gTMLIGk7zOkdhXpwKnMK%2Fimg.jpg> <br>신카이 하야토</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbGtsVo%2FbtsMsSuCvvm%2Fj4cHKLCUKLU6iI31WUb6A1%2Fimg.jpg> <br>이즈미다 토이치로</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbk5MVh%2FbtsMtauYkvv%2Foe3HObByNAb9qR15NiOYlK%2Fimg.jpg> <br>쿠로다 유키나리</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbqXGH5%2FbtsMsQjfTXT%2FwKyWO4HRe7I94FwMKJNkdk%2Fimg.jpg> <br>아시키바 타쿠토</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FMJUAd%2FbtsMsVLEUOk%2FnXfzOxUph4pZ7JKDALCfLK%2Fimg.jpg> <br>마나미 산가쿠</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbum4eU%2FbtsMtbU0wNK%2FQeib0k1MgG70iDeYuDPhZk%2Fimg.jpg> <br>도바시 마사키요</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fqb19t%2FbtsMueKd0NJ%2FYFTwQKEp0e05iPdJjLqBn1%2Fimg.jpg> <br>타카다조 레이</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FshL3q%2FbtsMskLAAhu%2FLx9CICSrdCCSzscTMbkY6K%2Fimg.jpg> <br>신카이 유토</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbIgG0s%2FbtsMutG7srE%2FQvoUxCaZZUg39ddswJMOv1%2Fimg.jpg> <br>토비라마</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbusrsy%2FbtsMsj63N6a%2FVyD37T1hO7W1NmQMEXm3tK%2Fimg.jpg> <br>미야하라 스즈코</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcF3ycP%2FbtsMsQjfTXD%2FbwGKOsqSK90OFrZxvtkBO1%2Fimg.jpg> <br>우사키치</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBNb2R%2FbtsMrlkfdLX%2FG554BY6eXGgKbe6fbAlBz1%2Fimg.jpg> <br>노기와 코지로</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXdYcJ%2FbtsMsavMX2T%2F5Kp3y44KgnIsVp6rqZpjrK%2Fimg.jpg> <br>이시가키 코타로</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FciXTU6%2FbtsMtaPguvC%2F8RBPQj4EIQAOfgBlfnt5D0%2Fimg.jpg> <br>이하라 토모야</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1jfb3%2FbtsMuv5Y2lS%2FHOkMm3yhy1xrkuWpFasydK%2Fimg.jpg> <br>츠지 아키히사</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuzyBZ%2FbtsMsNmFx5A%2FnS74DstsskhiYoxtIJMucK%2Fimg.jpg> <br>카쿠타</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fdd3Jqa%2FbtsMsPYR7v2%2FWAxpnEZNfWTbxok3UDq8K1%2Fimg.jpg> <br>미즈타 노부유키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fwm4NN%2FbtsMurbrozR%2FWrZrAy4LAaxbfXJGJoUI6K%2Fimg.jpg> <br>야마구치 노리유키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcuGlcC%2FbtsMtcM2tFo%2FSVE8t5qlZOvfYtIALVRKK1%2Fimg.jpg> <br>미도스지 아키라</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcmJqDC%2FbtsMs9pjpHH%2FnPAHMSLnpEBiOgf2j1BiK0%2Fimg.jpg> <br>키시가미 코마리</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fkz717%2FbtsMshuWRhp%2FKwiE1isff8CMByKwTzidZ1%2Fimg.jpg> <br>키리야 타카오</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FduLAyB%2FbtsMsOMrXvH%2FFSP6rn1Zf3uoZIRKvDogT1%2Fimg.jpg> <br>후나츠 카즈호</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpFHep%2FbtsMt6yBaYz%2FwKojUMQkS8iA8KSkLcMK7k%2Fimg.jpg> <br>핫초보리</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcEUzlw%2FbtsMsmvU1Me%2Fn75X9JoPxyaXTv8u58denk%2Fimg.jpg> <br>마치미야 에이키치</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F8tuct%2FbtsMrEKBNQ9%2FEoIhTQK0bXdDpkil4oJVd0%2Fimg.jpg> <br>이비타니 료</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbcc08X%2FbtsMsMH8U1r%2F3Q1NnGijkd2aUZezDvVZnK%2Fimg.jpg> <br>사토자키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FMwLsY%2FbtsMtcGl2Xd%2FHSDBuitYV9WTlk4vUKCirK%2Fimg.jpg> <br>하리모토</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCccvr%2FbtsMrnbhMXP%2FUD7QjVtTJ7c2u1Ju7z5FHk%2Fimg.jpg> <br>히가시무라 손다이</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdsqWja%2FbtsMs8RqoA9%2Fwc1crlV9N8XrjlFpdIAGr0%2Fimg.jpg> <br>우라쿠보 유사쿠</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FErvpk%2FbtsMsimY4AF%2F4pJQbKwQB4KYSuWaQhQ3ck%2Fimg.jpg> <br>니와즈마 시게노리</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbkuT0I%2FbtsMsPxQ3zN%2Fjxo3tyaJ9LUwQi3nsa7GgK%2Fimg.jpg> <br>후쿠키 카나</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbl2bAG%2FbtsMrFCJZgm%2FlCULXlnLEnLKXFtaDJKPD0%2Fimg.jpg> <br>타우라 요시아키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FE5pIs%2FbtsMtb8xVLb%2F9UkXogloiZFNA1rHeobRxk%2Fimg.jpg> <br>요시모토 신</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXzVcD%2FbtsMr1Tm8RL%2FEAf6tfxl9fOcjP88D5Rh2k%2Fimg.jpg> <br>이세 신야</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbzdois%2FbtsMsOZ4hXJ%2FtZUXS8O5KUOfNuoVBmJyak%2Fimg.jpg> <br>후지와라 마사유키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcrIi8D%2FbtsMtO52Glt%2FEQt8uzg9FVztHCcX1ll2nK%2Fimg.jpg> <br>키지 큐이</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FxLWaE%2FbtsMrxrq0cZ%2F6638iNKieZTYSq2S1f9ov1%2Fimg.jpg> <br>이치후지 니타카</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZbY3k%2FbtsMrCMQLj3%2FsRGWrThCKLAnD8eadtvNOk%2Fimg.jpg> <br>요시마루 라이네</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWclR0%2FbtsMuyIojbM%2FHMaKOx2cDW5vGt97sKrRwK%2Fimg.jpg> <br>요시마루 스즈네</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbGl7O1%2FbtsMsTUwNyy%2FZaqY6zFasmgtYLfdBniq2k%2Fimg.jpg> <br>소노모토</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FsIrUl%2FbtsMr0GUzU9%2F109vUvI9cBQxgwobGvNfz0%2Fimg.jpg> <br>카이다</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd0yaFY%2FbtsMrC0nbCx%2FOJdhd9biJLHsKjn6Of9aX0%2Fimg.jpg> <br>오노다의 어머니</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdGjnqm%2FbtsMtHMzayk%2FvvkxQGdP4oc8F8Ct55f5K0%2Fimg.jpg> <br>미도스지의 어머니</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fs3gIl%2FbtsMusVLL6t%2FNWw85Ri0vX8HYZT7tyKol0%2Fimg.jpg> <br>타카하시</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FLEUoa%2FbtsMrFQjimk%2FI1QExfKRWyxXk0hUByZgWk%2Fimg.jpg> <br>코세키 쇼</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FK9w27%2FbtsMufvy35n%2F5y7z2IS4ptsyaXi7zLDaR1%2Fimg.jpg> <br>이토카와 슈사쿠</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbsYti5%2FbtsMtpFnyOV%2FOkYViQhZKgiJhMJChNvvHk%2Fimg.jpg> <br>쿠츠노이</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcdVwP0%2FbtsMur3zDbS%2FPQ7L5EwzPWICiIxIrLvso0%2Fimg.jpg> <br>타테자키</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbtiMdY%2FbtsMsUsrzcQ%2FLKH40RLvO3jyrm86ByK4W0%2Fimg.jpg> <br>히메노 코토리</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FTTGmu%2FbtsMtpyF3oI%2F6BBLDk6kgBIiIQQTIDkuv0%2Fimg.jpg> <br>야스 히로카즈</br>",
+"<img src=https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FedxA05%2FbtsMuwDO9d8%2FNyv3BEy887guEvjh5jnsXK%2Fimg.jpg> <br>와타나베 와타루</br>",
+
+
+);
+//*********************************************************
+
+var lstMember = new Array();
+var parent = new Array();
+var equal = new Array();
+var rec = new Array();
+var cmp1,cmp2;
+var head1,head2;
+var nrec;
+
+var numQuestion;
+var totalSize;
+var finishSize;
+var finishFlag;
+
+//変数の初期化+++++++++++++++++++++++++++++++++++++++++++++
+function initList(){
+var n = 0;
+var mid;
+var i;
+
+//??トすべき配列
+lstMember[n] = new Array();
+for (i=0; i<namMember.length; i++) {
+lstMember[n][i] = i;
+}
+parent[n] = -1;
+totalSize = 0;
+n++;
+
+for (i=0; i<lstMember.length; i++) {
+//要素数が２以上なら２分割し、
+//分割された配列をlstMemberの最後に加える
+if(lstMember[i].length>=2) {
+mid = Math.ceil(lstMember[i].length/2);
+lstMember[n] = new Array();
+lstMember[n] = lstMember[i].slice(0,mid);
+totalSize += lstMember[n].length;
+parent[n] = i;
+n++;
+lstMember[n] = new Array();
+lstMember[n] = lstMember[i].slice(mid,lstMember[i].length);
+totalSize += lstMember[n].length;
+parent[n] = i;
+n++;
+}
+}
+
+//保存用配列
+for (i=0; i<namMember.length; i++) {
+rec[i] = 0;
+}
+nrec = 0;
+
+//引き分けの結果を保存するリスト
+//キ?：リンク始?の値
+// 値 ：リンク終?の値
+for (i=0; i<=namMember.length; i++) {
+equal[i] = -1;
+}
+
+cmp1 = lstMember.length-2;
+cmp2 = lstMember.length-1;
+head1 = 0;
+head2 = 0;
+numQuestion = 1;
+finishSize = 0;
+finishFlag = 0;
+}
+
+//リストの??ト+++++++++++++++++++++++++++++++++++++++++++
+//flag：比較結果
+//  -1：左を選択
+//   0：引き分け
+//   1：右を選択
+function sortList(flag){
+var i;
+var str;
+
+//recに保存
+if (flag<0) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+}
+else if (flag>0) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+else {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+equal[rec[nrec-1]] = lstMember[cmp2][head2];
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+
+//片方のリストを走査し終えた後の処理
+if (head1<lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+//リストcmp2が走査済 - リストcmp1の残りをコピ?
+while (head1<lstMember[cmp1].length){
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+}
+else if (head1==lstMember[cmp1].length && head2<lstMember[cmp2].length) {
+//リストcmp1が走査済 - リストcmp2の残りをコピ?
+while (head2<lstMember[cmp2].length){
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+
+//両方のリストの最後に到達した場合は
+//親リストを更新する
+if (head1==lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+for (i=0; i<lstMember[cmp1].length+lstMember[cmp2].length; i++) {
+lstMember[parent[cmp1]][i] = rec[i];
+}
+lstMember.pop();
+lstMember.pop();
+cmp1 = cmp1-2;
+cmp2 = cmp2-2;
+head1 = 0;
+head2 = 0;
+
+//新しい比較を行う前にrecを初期化
+if (head1==0 && head2==0) {
+for (i=0; i<namMember.length; i++) {
+rec[i] = 0;
+}
+nrec = 0;
+}
+}
+
+if (cmp1<0) {
+str = "Battle No."+(numQuestion-1)+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+document.getElementById("battleNumber").innerHTML = str;
+
+showResult();
+finishFlag = 1;
+}
+else {
+showImage();
+}
+}
+
+//結果の?示+++++++++++++++++++++++++++++++++++++++++++++++
+function showResult() {
+var ranking = 1;
+var sameRank = 1;
+var str = "";
+var i;
+
+str += "<table style=\"width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #000; border-collapse:collapse\" align=\"center\">";
+str += "<tr><td style=\"color:#ffffff; background-color:#000; text-align:center;\">순위<\/td><td style=\"color:#ffffff; background-color:#000; text-align:center;\">이름<\/td><\/tr>";
+
+for (i=0; i<namMember.length; i++) {
+str += "<tr><td style=\"border:1px solid #000; text-align:right; padding-right:5px;\">"+ranking+"<\/td><td style=\"border:1px solid #000; padding-left:5px;\">"+namMember[lstMember[0][i]]+"<\/td><\/tr>";
+if (i<namMember.length-1) {
+if (equal[lstMember[0][i]]==lstMember[0][i+1]) {
+sameRank++;
+} else {
+ranking += sameRank;
+sameRank = 1;
+}
+}
+}
+str += "<\/table>";
+
+document.getElementById("resultField").innerHTML = str;
+}
+
+//比較する２つ要素の?示+++++++++++++++++++++++++++++++++++
+function showImage() {
+var str0 = "Battle No."+numQuestion+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+var str1 = ""+toNameFace(lstMember[cmp1][head1]);
+var str2 = ""+toNameFace(lstMember[cmp2][head2]);
+
+document.getElementById("battleNumber").innerHTML = str0;
+document.getElementById("leftField").innerHTML = str1;
+document.getElementById("rightField").innerHTML = str2;
+
+numQuestion++;
+}
+
+//数値を名前（顔文字）に変換+++++++++++++++++++++++++++++++
+function toNameFace(n){
+var str = namMember[n];
+
+//顔文字を追加する場合は以下のコメントアウトを外す
+//namMemberのインデックスと矛盾しないように注意
+/*
+str += "<br>────<br>";
+switch(n) {
+//case -1 はサンプルなので削除すること
+case -1: str+="（ ´∀｀）";break;
+default: str+=""+n;
+}
+*/
+return str;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+/**********************************************************
+
+ ?のス?イルを変更する場合はここを編集してください。
+
+**********************************************************/
+#mainTable{
+font-size: 12px;
+font-family: '돋움',sans-serif;
+text-align: center;
+vertical-align: middle;
+width: 410px;
+margin-left: auto;
+margin-right: auto;
+border-collapse: separate;
+border-spacing: 10px 5px;
+}
+#leftField{
+width: 120px;
+height: 150px;
+border: 1px solid #000;
+}
+#rightField{
+width: 120px;
+height: 150px;
+border: 1px solid #000;
+}
+.middleField{
+width: 120px;
+height: 70px;
+border: 1px solid #000;
+}
+//-->
+<!--
+A{
+  text-decoration : none;
+}
+-->
+<!--
+a:hover{color:#99ccff;}
+-->
+</style>
+<meta name="generator" content="Namo WebEditor(Trial)">
+<meta http-equiv="content-type" content="text/html; charset=utf-8"></head>
+
+<body text="#000000" bgcolor="#ffffff" link="#0099ff" vlink="#0099ff" alink="#0099ff">
+<table id="mainTable" align="center">
+<tr>
+        <td id="battleNumber" colspan="3" style="padding-bottom: 10px;">
+            <p>&nbsp;</p>
+        </td>
+</tr>
+<tr>
+<td id="leftField" onClick="if(finishFlag==0)sortList(-1);" rowspan="2">
+&nbsp;
+</td>
+<td class="middleField" onClick="if(finishFlag==0)sortList(0);">
+둘 다 좋다
+</td>
+<td id="rightField" onClick="if(finishFlag==0)sortList(1);" rowspan="2">
+</td>
+</tr>
+<tr>
+<td class="middleField" onClick="if(finishFlag==0)sortList(0);">
+모르겠다
+</td>
+</tr>
+</table><br><br>
+<div id="resultField" style="text-align:center;">
+    <p><font size="2" face="돋움"><span style="">오류가 있다면 알려주세요!</font></p>
+
+</div>
+<script type="text/javascript">
+<!--
+initList();
+showImage();
+//-->
+</script>
+
+</body>
+</html>
